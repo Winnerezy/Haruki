@@ -17,14 +17,14 @@ export default function Onboarding() {
       </section>
       
       <div className="flex flex-col items-center justify-center gap-y-2 mt-48">
-      <h3 className="text-2xl">Welcome to <span className="text-2xl font-bold tracking-wide text-primary2">Sakura</span></h3>
+      <h3 className="text-2xl">Welcome to <span className="text-2xl font-bold tracking-wide text-primary2">Haruki</span></h3>
       <p className="font-semibold sm:text-[15px] text-xs">A professional task manager for your personal student needs</p>
       </div>
       <div onClick={()=>navigate('/sign-up')}>
       <Button title="Join Now" />
       </div>
 
-      <section className="flex flex-col items-center justify-center gap-8 w-full h-max mt-16 px-80">
+      <section className="flex md:flex-row flex-col items-center justify-center gap-8 w-full h-max mt-16 px-8 details">
         <Card title='Effective Planning' description={planning} className='self-start'/>
         <Card title='Note Taking' description={noteTaking} className='self-end'/>
         <Card title='Pomodoro' description={pomodoro} />

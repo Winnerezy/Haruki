@@ -10,14 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.18",
+    "@mui/x-date-pickers": "^7.5.0",
     "moment": "^2.30.1",
     "mongodb": "^6.6.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
     "react-icons": "^5.2.1",
-=======
->>>>>>> 61e6fe2dac5617ea3fd0b7a85cd0d917d6de8f34
     "react-router-dom": "^6.23.0"
   },
   "devDependencies": {

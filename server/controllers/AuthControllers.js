@@ -24,8 +24,8 @@ export const signUp = async(req, res) => {
         const num = Math.ceil(Math.random() * 1000 + 1)
         const token = jwt.sign(num, process.env.SECRET_KEY, {})
         userData.authToken = token
-        const user = await User.create(userData)
-        return res.status(201).json(user)
+        await User.create(userData)
+        return res.status(201).json({ message: "Created Successfully" })
     } catch (error) {
         return res.status(500).json({ message: error.message })
     }
@@ -35,7 +35,7 @@ export const signIn = async(req, res) => {
     try {
         const { email, password } = req.body;
 
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ email }, { password: false });
         if (!existingUser) {
             return res
             .status(404)

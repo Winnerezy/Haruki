@@ -9,18 +9,22 @@ import NoPage from './pages/NoPage.jsx'
 import Onboarding from './pages/Onboarding.jsx'
 import SignIn from './pages/Signin.jsx'
 import SignUp from './pages/Signup.jsx'
+import Pomodoro from './pages/Pomodoro.jsx'
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider>
-    <Router>
-    <Routes>
-      <Route path='/:username/'element={<App/>} >
-        <Route path='home' element={<Home/>} />
-      </Route>
-      <Route path='/' element={<Landing/>} />
-    </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="daily-tasks" element={<Home />} />
+            <Route path="pomodoro" element={<Pomodoro />} />
+          </Route>
+          <Route path="/welcome" element={<Onboarding />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+        </Routes>
+      </Router>
     </ThemeProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

@@ -56,15 +56,16 @@ export default function SignUp() {
 
 
   return (
-    <main className='w-full h-screen'>
+    <main className="w-screen h-full">
       <section className="flex h-full w-full justify-between flex-row items-center">
-        <section className="hidden xl:flex absolute top-4 right-4">
-        </section>
+        <section className="hidden xl:flex absolute top-4 right-4"></section>
         <section className="h-full bg-primary2 xl:w-1/2 w-full flex items-center justify-center">
           <section className="flex flex-col items-center justify-center space-y-8 w-full max-w-[450px] px-4">
             <div className="flex flex-col space-y-4 self-start">
               <p className="text-4xl font-bold tracking-tight">Sign Up</p>
-              <p className='font-light tracking-tight '>Please enter your details below</p>
+              <p className="font-light tracking-tight ">
+                Please enter your details below
+              </p>
             </div>
             <div className="row w-full">
               <div className="form-item flex-grow">
@@ -150,7 +151,15 @@ export default function SignUp() {
               disabled={isLoading}
               isLoading={isLoading}
             />
-            <p className='text-gray-700 tracking-tighter'>Have an account ? <Link to={'/sign-in'} className='text-white hover:text-opacity-60'>Sign In</Link></p>
+            <p className="text-gray-700 tracking-tighter">
+              Have an account ?{" "}
+              <Link
+                to={"/sign-in"}
+                className="text-white hover:text-opacity-60"
+              >
+                Sign In
+              </Link>
+            </p>
           </section>
         </section>
         <section
@@ -158,7 +167,7 @@ export default function SignUp() {
             theme ? lightMode : darkMode
           } hidden xl:flex flex-col items-center justify-center gap-y-16`}
         >
-          <p className="text-5xl font-bold tracking-light bg-gradient-to-r from-pink-300 to-red-200 bg-clip-text text-transparent">
+          <p className="text-5xl font-bold tracking-light bg-gradient-to-r from-bg-text-primary to bg-white bg-clip-text text-transparent">
             Sakura
           </p>
           <p className="text-3xl font-bold tracking-light font-serif bg-gradient-to-r from-pink-300 to-red-200 bg-clip-text text-transparent">

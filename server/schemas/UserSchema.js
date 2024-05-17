@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
     profilePicture: {
         type: String
     },
+    tasks: [{
+        type: mongoose.Types.ObjectId,
+        ref: "Task"
+    }],
     authToken: {
         type: String,
         required: true

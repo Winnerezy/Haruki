@@ -12,7 +12,6 @@ export default function SignIn() {
   //const [token, setToken] = useToken(authToken)
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState(null)
-  console.log(data)
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -53,9 +52,7 @@ export default function SignIn() {
   };
 
   return (
-    <main className="h-screen w-full">
-      <section className="flex h-full w-full justify-between flex-row items-center">
-        <section className="hidden xl:flex absolute top-4 right-4"></section>
+    <main className="min-h-screen w-full flex items-center justify-center">
         <section className="h-full bg-primary2 xl:w-1/2 w-full flex items-center justify-center">
           <section className="flex flex-col items-center justify-center space-y-8 w-full max-w-[450px] px-4">
             <div className="flex flex-col space-y-4 self-start">
@@ -100,7 +97,6 @@ export default function SignIn() {
             <Button
               title={"Sign In"}
               onClick={handleSignIn}
-              disabled={isLoading}
               isLoading={isLoading}
             />
             <p className="text-gray-700 tracking-tighter">
@@ -119,14 +115,13 @@ export default function SignIn() {
             theme ? lightMode : darkMode
           } hidden xl:flex flex-col items-center justify-center gap-y-16`}
         >
-          <p className="text-5xl font-bold tracking-light bg-gradient-to-r from-pink-300 to-red-200 bg-clip-text text-transparent">
-            Sakura
+          <p className="text-5xl font-bold tracking-light text-text-primary">
+            Haruki
           </p>
-          <p className="text-3xl font-bold tracking-light font-serif bg-gradient-to-r from-pink-300 to-red-200 bg-clip-text text-transparent">
+          <p className="text-2xl tracking-light font-semibold text-black">
             DISCOVER NEW EXPERIENCES
           </p>
         </section>
-      </section>
     </main>
   );
 }
