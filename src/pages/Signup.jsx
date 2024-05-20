@@ -1,16 +1,9 @@
-import ThemeToggle from '../components/Shared/ThemeToggle'
-import { ThemeContext } from '../components/ThemeContext'
-import { useContext } from 'react'
-import { darkMode, lightMode } from '../utils/Styles'
-import Button from '../components/Shared/button'
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
-
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios"
+import Button from "../components/Shared/Button"
 
 export default function SignUp() {
-    const { theme } = useContext(ThemeContext)
-    const [isLoading, setIsLoading] = useState(false)
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
@@ -18,165 +11,132 @@ export default function SignUp() {
         email: '',
         password: ''
     })
+
     const handleChange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value}) //setting the information using the element name attributes and their values
+        setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
     const navigate = useNavigate()
 
-    const handleSignIn = async() => {
-        try {
-          setIsLoading(true);
+    const handleSignUp = async() => {
+      try {
             const options = {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({...formData})
-            };
-            const res = await fetch(
-                "http://localhost:3000/sign-up",
-                options
+                firstname: formData.firstname,
+                lastname: formData.lastname,
+                dateOfBirth: formData.dateOfBirth,
+                email: formData.email,
+                password: formData.password,
+              }
+            await axios.post(
+              "http://localhost:3000/sign-up",
+              options
             );
-            if(!res.ok){
-              throw new Error("Error found")
-            }
-            const ans = await res.json()
-            console.log(ans)
-            navigate("/home");
-        } catch (error) {
-            console.log('Error', error)
-        } finally {
-            setIsLoading(false)
-          }
-
+            navigate('/dashboard')
+      } catch (error) {
+        console.error(error)
+      }
     }
 
 
-
   return (
-    <main className="w-screen h-full">
-      <section className="flex h-full w-full justify-between flex-row items-center">
-        <section className="hidden xl:flex absolute top-4 right-4"></section>
-        <section className="h-full bg-primary2 xl:w-1/2 w-full flex items-center justify-center">
-          <section className="flex flex-col items-center justify-center space-y-8 w-full max-w-[450px] px-4">
-            <div className="flex flex-col space-y-4 self-start">
-              <p className="text-4xl font-bold tracking-tight">Sign Up</p>
-              <p className="font-light tracking-tight ">
-                Please enter your details below
-              </p>
-            </div>
-            <div className="row w-full">
-              <div className="form-item flex-grow">
-                <label htmlFor="firstname" className="text-black text-[15px]">
+    <main className="min-h-screen w-full flex justify-between">
+      <section className="size-full bg-white flex items-center justify-center">
+        <form className="flex flex-col max-w-[450px] w-full min-h-screen py-10 items-center gap-6" onSubmit={(e)=> e.preventDefault()}>
+          <header className="font-bold tracking-wide text-4xl underline pl-4">
+            Sign Up
+          </header>
+          <div className="flex flex-col p-4 gap-y-5 md:gap-y-8 w-full">
+            <div className="flex gap-x-4 flex-grow">
+              <section className="flex flex-col gap-y-2 max-w-80 flex-grow">
+                <label className="text-md w-full tracking-wide">
                   First Name
                 </label>
                 <input
                   type="text"
-                  name="firstname"
                   placeholder="Enter your first name"
-                  className="rounded-md outline-none p-2 text-black placeholder:text-gray-600 border border-gray-300 flex-grow"
-                  onChange={handleChange}
+                  className="p-2 w-full max-h-10 flex-grow border rounded-md outline-none focus:border-azure-radiance-600"
                   value={formData.firstname}
                   required={true}
+                  onChange={handleChange}
+                  name="firstname"
                 />
-              </div>
-              <div className="form-item flex-grow">
-                <label htmlFor="lastname" className="text-black text-[15px]">
+              </section>
+              <section className="flex flex-col gap-y-2 max-w-80 flex-grow ">
+                <label className="text-md w-full tracking-wide">
                   Last Name
                 </label>
                 <input
                   type="text"
-                  name="lastname"
                   placeholder="Enter your last name"
-                  className="rounded-md outline-none p-2 text-black placeholder:text-gray-600 border border-gray-300 flex-grow"
-                  onChange={handleChange}
+                  className="p-2 w-full max-h-10 flex-grow border rounded-md outline-none focus:border-azure-radiance-600"
                   value={formData.lastname}
                   required={true}
+                  onChange={handleChange}
+                  name="lastname"
                 />
-              </div>
+              </section>
             </div>
-            <div className="row w-full">
-              <div className="form-item flex-grow">
-                <label htmlFor="dateOfBirth" className="text-black text-[15px]">
+            <div>
+              <section className="flex flex-col gap-y-2 max-w-48 flex-grow">
+                <label className="text-md w-full tracking-wide">
                   Date Of Birth
                 </label>
                 <input
                   type="text"
-                  name="dateOfBirth"
                   placeholder="YYYY-MM-DD"
-                  className="rounded-md outline-none p-2 text-black placeholder:text-gray-600 border border-gray-300 flex-grow"
-                  onChange={handleChange}
+                  className="p-2 w-full max-h-10 flex-grow border rounded-md outline-none focus:border-azure-radiance-600"
                   value={formData.dateOfBirth}
                   required={true}
+                  onChange={handleChange}
+                  name="dateOfBirth"
                 />
-              </div>
+              </section>
             </div>
-            <div className="row w-full">
-              <div className="form-item flex-grow">
-                <label htmlFor="email" className="text-black text-[15px]">
-                  Email
-                </label>
+            <div>
+              <section className="flex flex-col gap-y-2 flex-grow">
+                <label className="text-md w-full tracking-wide">Email</label>
                 <input
                   type="email"
-                  name="email"
-                  placeholder="Enter your email address"
-                  className="rounded-md outline-none p-2 text-black placeholder:text-gray-600 border border-gray-300 flex-grow"
-                  onChange={handleChange}
+                  placeholder="Enter your email"
+                  className="p-2 w-full max-h-10 flex-grow border rounded-md outline-none focus:border-azure-radiance-600"
                   value={formData.email}
                   required={true}
+                  onChange={handleChange}
+                  name="email"
                 />
-              </div>
+              </section>
             </div>
-            <div className="row w-full">
-              <div className="form-item flex-grow">
-                <label htmlFor="password" className="text-black text-[15px]">
-                  Password
-                </label>
+            <div>
+              <section className="flex flex-col gap-y-2 flex-grow">
+                <label className="text-md w-full tracking-wide">Password</label>
                 <input
                   type="password"
-                  name="password"
-                  placeholder="Enter a secure password"
-                  className="rounded-md outline-none p-2 text-black placeholder:text-gray-600 border border-gray-300 flex-grow"
-                  onChange={handleChange}
+                  placeholder="Enter your password"
+                  className="p-2 w-full max-h-10 flex-grow border rounded-md outline-none focus:border-azure-radiance-600"
                   value={formData.password}
                   required={true}
+                  onChange={handleChange}
+                  name="password"
                 />
-              </div>
+              </section>
             </div>
-            <Button
-              title={"Sign Up"}
-              onClick={handleSignIn}
-              disabled={isLoading}
-              isLoading={isLoading}
-            />
-            <p className="text-gray-700 tracking-tighter">
+            <Button title={"Sign Up"} onClick={handleSignUp}/>
+            <p className="text-center tracking-wider">
               Have an account ?{" "}
-              <Link
-                to={"/sign-in"}
-                className="text-white hover:text-opacity-60"
-              >
+              <Link to={"/sign-in"} className="text-azure-radiance-400">
                 Sign In
               </Link>
             </p>
-          </section>
-        </section>
-        <section
-          className={`h-full w-1/2 ${
-            theme ? lightMode : darkMode
-          } hidden xl:flex flex-col items-center justify-center gap-y-16`}
-        >
-          <p className="text-5xl font-bold tracking-light bg-gradient-to-r from-bg-text-primary to bg-white bg-clip-text text-transparent">
-            Sakura
-          </p>
-          <p className="text-3xl font-bold tracking-light font-serif bg-gradient-to-r from-pink-300 to-red-200 bg-clip-text text-transparent">
-            DISCOVER NEW EXPERIENCES
-          </p>
-          <p className="font-semibold text-xl bg-gradient-to-br from-pink-400 to-red-200 bg-clip-text text-transparent">
-            Sign Up Today!
-          </p>
-        </section>
+          </div>
+        </form>
+      </section>
+      <section className="bg-azure-radiance-50 h-screen w-full hidden lg:flex flex-col items-center justify-center gap-y-12 sticky top-0">
+        <p className="text-5xl font-bold tracking-wider text-azure-radiance-400">
+          Hakuri
+        </p>
+        <p className="text-azure-radiance-500 text-2xl font-light">
+          Discover proper management
+        </p>
       </section>
     </main>
   );

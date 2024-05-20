@@ -6,7 +6,7 @@ import cors from "cors"
 import multer from "multer"
 import {  getProfile } from "./controllers/ProfileController.js"
 import { verifyToken } from "./middleware/VerifyToken.js"
-import { addTasks } from "./controllers/TasksController.js"
+import { addTasks, deleteTask, getTasks } from "./controllers/TasksController.js"
 
 const app = express()
 app.use(express.json())
@@ -34,7 +34,8 @@ app.post('/sign-up', signUp)
 app.post('/sign-in', signIn)
 app.post('/add-task', verifyToken, addTasks)
 app.get('/profile', verifyToken, getProfile)
-
+app.get('/get-tasks', verifyToken, getTasks)
+app.delete('/delete-task/:id', verifyToken, deleteTask)
 app.listen(PORT, ()=> {
     console.log(`Server running on port ${PORT}`)
 })

@@ -1,9 +1,10 @@
-
-export default function Button({ title, onClick, isLoading }) {
+export default function Button({ title, onClick }) {
   return (
-    <button className="relative flex items-center justify-center w-36 h-10 bg-gradient-to-r from-text-primary to-white hover:bg-primary2 rounded-es-[10px] rounded-se-[10px] shadow-md text-white font-semibold" onClick={onClick} disabled={isLoading}>
-      <div className={`absolute left-2 w-6 h-6 rounded-full border-t-text-primary border-4 bg-white animate-spin ${!isLoading && "hidden"}`}></div>
-      <p>{ title }</p>
+    <button
+      className="border border-azure-radiance-400 rounded-md hover:bg-azure-radiance-400 hover:text-white w-36 min-h-10 self-center font-bold"
+      onClick={onClick}
+    >
+      { title }
     </button>
   );
 }

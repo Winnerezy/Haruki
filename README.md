@@ -1,2 +1,2 @@
 # Haruki
-A professional task management application.
+A professional task management website

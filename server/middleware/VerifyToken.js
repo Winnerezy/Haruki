@@ -17,6 +17,6 @@ export const verifyToken = (req, res, next)=> {
             return res.status(400).json({ message: "Invalid token" })
         }
         req.authToken = authToken
+        next();
     })
-    next();
 }

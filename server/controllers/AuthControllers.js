@@ -35,14 +35,14 @@ export const signIn = async(req, res) => {
     try {
         const { email, password } = req.body;
 
-        const existingUser = await User.findOne({ email }, { password: false });
+        const existingUser = await User.findOne({ email });
         if (!existingUser) {
             return res
             .status(404)
             .json({ message: "User not registered" });
         }
 
-        const match = await bcrypt.compare(password, existingUser.password)
+        const match = bcrypt.compare(password, existingUser.password)
         
         if (!match) {
            return res.status(400).json({ message: "Incorrect email and password combination" }); 
