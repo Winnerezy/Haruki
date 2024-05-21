@@ -10,7 +10,7 @@
   --global-text: #333;
   --global-text-muted: #888;
   --global-card-bg: #fff;
-  --global-card-title-bg: #e8e8e8;
+  --global-card-hover-bg: #e8e8e8;
   --global-card-shadow: rgba(0, 0, 0, 0.2);
   --global-primary-skeleton: rgba(165, 165, 165, 0.1);
   --global-secondary-skeleton: rgba(165, 165, 165, 0.3);
@@ -22,16 +22,16 @@
   --global-shadow: rgba(0, 0, 0, 0.1);
   --global-border-radius: 0.3rem;
   --primary-accent: rgba(0, 0, 0, 0.6);
-  --primary-accent-bg: #d6f3ff;
-  --ongoing-dot-color: #aaff00;
+  --primary-accent-bg: #48cfff;
+  --inprogress-indicator-color: #aaff00;
   --completed-indicator-color: #00aaff;
-  --cancelled-indicator-color: #ff0000;
-  --not-yet-aired-indicator-color: #ffa500;
+  --overdue-indicator-color: #ff0000;
+  --not-started-indicator-color: #ffa500;
   --default-indicator-color: #808080;
 }
 
 /* Dark Mode  */
-:root.dark-mode {
+[data-theme='dark'] {
   --global-primary-bg: #080808;
   --global-primary-bg-tr: rgba(8, 8, 8, 0.9);
   --global-secondary-bg: #141414;
@@ -39,10 +39,10 @@
   --global-div: #141414;
   --global-div-tr: rgba(20, 20, 20, 0.5);
   --global-border: rgba(245, 245, 245, 0.1);
-  --global-text: #e8e8e8;
+  --global-text: #ffffff;
   --global-text-muted: #696969;
   --global-card-bg: #181818;
-  --global-card-title-bg: #151515;
+  --global-card-hover-bg: rgba(85, 85, 85, 0.3);
   --global-card-shadow: rgba(0, 0, 0, 0.6);
   --global-primary-skeleton: rgba(85, 85, 85, 0.1);
   --global-secondary-skeleton: rgba(85, 85, 85, 0.3);

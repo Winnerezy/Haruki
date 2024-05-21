@@ -14,6 +14,11 @@ const TaskSchema = new mongoose.Schema({
     },
     dueDate: {
         type: String,
+        required: true
+    },
+    type: {
+        type: String,
+        required: true,
     }
 }, { timestamps: true })
 

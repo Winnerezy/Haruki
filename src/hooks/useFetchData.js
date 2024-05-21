@@ -1,11 +1,13 @@
 import axios from "axios";
+import { useContext } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useCallback } from "react";
+import { TaskContext } from "../TaskContext";
 
 export default function useFetchData(){
-  const [tasks, setTasks] = useState([])
-
+  const { setTasks } = useContext(TaskContext)
+  const [isLoading, setIsLoading] = useState(true)
   const fetchTasks = useCallback(async() => {
       try {
         const options = {
@@ -19,17 +21,21 @@ export default function useFetchData(){
           throw new Error();
         }
         setTasks(res.data);
-        console.log(tasks);
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLoading(false)
       }
-    }, [tasks])
+    }, [setTasks])
 
   useEffect(()=> {
     fetchTasks()
+  }, [fetchTasks])
+  
 
-    return ()=> console.log("Cleaned Up")
-  }, [tasks])
-
-  return { tasks }
+  const refetch = async() => {
+    await fetchTasks();
+  } 
+  
+  return { isLoading, refetch }
 }

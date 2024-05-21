@@ -17,8 +17,7 @@ body{
 }
 
 ::selection {
-  background-color: var(--primary-accent-bg);
-  color: var(--primary-accent)
+  background-color: var(--global-border);
 }
 
 .topbar {
@@ -30,12 +29,31 @@ body{
 }
 
 .button {
-  border: var(--global-border) 3px solid;
+  border: var(--global-border) 1px solid;
   cursor: pointer;
 }
 
 .task {
-  background-color: var(--global-primary-bg);
+  background-color: var(--global-card-bg);
+}
+
+.skeleton {
+  background-color: var(--global-secondary-skeleton);
+  border-radius: 4px;
+  /* Add animation for pulsating effect (optional) */
+  animation: pulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @media screen and (max-width: 1024px) {
