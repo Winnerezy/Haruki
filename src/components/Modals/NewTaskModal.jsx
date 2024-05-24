@@ -9,7 +9,7 @@ import dayjs from "dayjs";
 import useFetchData from "../../hooks/useFetchData";
 import ReactSelect from "react-select";
 
-export default function NewTaskModal({ open, handleClose, setOpen }) {
+export default function NewTaskModal({ open, handleClose }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const titleRef = useRef(null);
@@ -23,12 +23,7 @@ export default function NewTaskModal({ open, handleClose, setOpen }) {
     setDescription(descriptionRef.current.value);
   };
 
-  // console.log({
-  //   date:
-  //     date.toISOString().slice(0, 10) > new Date().toISOString().slice(0, 10),
-  //   now: "d",
-  // });
-
+  console.log(open)
   const taskTypes = [
     { value: "personal", label: "Personal" },
     { value: "school", label: "School" },

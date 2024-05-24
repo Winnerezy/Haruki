@@ -9,10 +9,8 @@ import dayjs from "dayjs";
 import useFetchData from "../../hooks/useFetchData";
 import ReactSelect from "react-select";
 import { useEffect } from "react";
-import { useContext } from "react";
-import { EditModalContext } from "../../EditModalContext";
 
-export default function EditTaskModal({ id }) {
+export default function EditTaskModal({ id, isOpen, handleClose }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const titleRef = useRef(null);
@@ -20,12 +18,6 @@ export default function EditTaskModal({ id }) {
   const [date, setDate] = useState(dayjs(new Date())); //date picker for the modal
   const [type, setType] = useState("");
   const { refetch } = useFetchData();
-
-  const { isOpen, setIsOpen } = useContext(EditModalContext)
-
-  const handleClose = () => {
-    setIsOpen(false)
-  }
 
   const handleChange = () => {
     setTitle(titleRef.current.value);
@@ -65,9 +57,7 @@ export default function EditTaskModal({ id }) {
   }
   fetchTask()
 }, [id]);
-
-console.log(isOpen)
-
+console.log(type)
 const handleEdit = async() => {
     try {
       const options = {
@@ -132,8 +122,8 @@ const handleEdit = async() => {
                 color: "black",
               }),
             }}
-            placeholder="Select task type"
-            value={taskTypes.value}
+            placeholder = { type }
+            value={type}
             onChange={(e) => setType(e.value)}
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
