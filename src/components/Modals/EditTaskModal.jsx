@@ -9,15 +9,23 @@ import dayjs from "dayjs";
 import useFetchData from "../../hooks/useFetchData";
 import ReactSelect from "react-select";
 import { useEffect } from "react";
+import { useContext } from "react";
+import { EditModalContext } from "../../EditModalContext";
 
-export default function EditTaskModal({ open, handleClose, id }) {
+export default function EditTaskModal({ id }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
-  const [date, setDate] = useState(dayjs("2024-05-20")); //date picker for the modal
+  const [date, setDate] = useState(dayjs(new Date())); //date picker for the modal
   const [type, setType] = useState("");
   const { refetch } = useFetchData();
+
+  const { isOpen, setIsOpen } = useContext(EditModalContext)
+
+  const handleClose = () => {
+    setIsOpen(false)
+  }
 
   const handleChange = () => {
     setTitle(titleRef.current.value);
@@ -50,13 +58,15 @@ export default function EditTaskModal({ open, handleClose, id }) {
       setTitle(title);
       setDescription(description)
       setType(type)
-      console.log(dueDate)
+      setDate(dayjs(dueDate))
     } catch (error) {
       console.error(error);
     }
   }
   fetchTask()
 }, [id]);
+
+console.log(isOpen)
 
 const handleEdit = async() => {
     try {
@@ -80,10 +90,8 @@ const handleEdit = async() => {
       if (res.status !== 200) {
         throw new Error();
       }
-      const ans = res.data
       refetch()
       handleClose()
-      console.log(ans)
     } catch (error) {
       console.error(error);
     }
@@ -91,7 +99,7 @@ const handleEdit = async() => {
 
   return (
     <Modal
-      open={open}
+      open={isOpen}
       onClose={handleClose}
       className="flex w-full items-center justify-center"
     >

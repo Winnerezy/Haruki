@@ -14,7 +14,7 @@ export default function NewTaskModal({ open, handleClose, setOpen }) {
   const [description, setDescription] = useState("");
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
-  const [date, setDate] = useState(dayjs("2024-05-20")); //date picker for the modal
+  const [date, setDate] = useState(dayjs(new Date())); //date picker for the modal
   const [type, setType] = useState("");
   const { refetch } = useFetchData();
 
@@ -119,7 +119,7 @@ export default function NewTaskModal({ open, handleClose, setOpen }) {
             />
           </LocalizationProvider>
 
-          <Button title={"Edit Task"} onClick={handleAdd} />
+          <Button title={"Add Task"} onClick={handleAdd} />
         </section>
       </Box>
     </Modal>

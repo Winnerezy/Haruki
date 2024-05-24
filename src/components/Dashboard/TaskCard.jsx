@@ -6,17 +6,16 @@ import dayjs from 'dayjs'
 import { Star } from '@mui/icons-material'
 import EditTaskModal from '../Modals/EditTaskModal'
 import { useState } from 'react'
+import EditModalProvider, { EditModalContext } from '../../EditModalContext'
+import { useContext } from 'react'
 
 export default function TaskCard({ id, title, description, dueDate, type, onClick }) {
-
   
-  const [isOpen, setIsOpen] = useState(false);
+  const { setIsOpen } = useContext(EditModalContext)
 
   const handleOpen = () => {
     setIsOpen(true);
   };
-
-  const handleClose = () => setIsOpen(false);
 
   const { refetch } = useFetchData()
   const handleDelete = async(id) => {
@@ -39,50 +38,56 @@ export default function TaskCard({ id, title, description, dueDate, type, onClic
   const due = dayjs(dueDate).format("dddd, DD, MMMM, YYYY")
 
   return (
-    <div className="mt-8 relative flex flex-col w-full max-w-[400px] p-2 h-[200px] rounded-md shadow-md task hover:bg-[var(--global-card-accent-bg)] hover:-translate-y-1 transition duration-300 ease-in-out cursor-pointer">
-      <article className="text-md font-semibold text-start max-w-36 sm:max-w-80 line-clamp-1">{title}</article>
-      <section
-        className={`flex items-center justify-center gap-x-1 absolute top-2 right-2 border rounded-md p-1 ${
-          type === "personal"
-            ? "border-yellow-300"
-            : type === "work"
-            ? "border-purple-300"
-            : type === "school"
-            ? "border-green-300"
-            : ""
-        }`}
+      <div
+        className="mt-8 relative flex flex-col w-full max-w-[400px] p-2 h-[200px] rounded-md shadow-md task hover:bg-[var(--global-card-accent-bg)] hover:-translate-y-1 transition duration-300 ease-in-out cursor-pointer"
+        onClick={handleOpen}
       >
-        <Star
-          className={`w-4 h-4 rounded-full ${
+        <article className="text-md font-semibold text-start max-w-36 sm:max-w-80 line-clamp-1">
+          {title}
+        </article>
+        <section
+          className={`flex items-center justify-center gap-x-1 absolute top-2 right-2 border rounded-md p-1 ${
             type === "personal"
-              ? "text-yellow-300"
+              ? "border-yellow-300"
               : type === "work"
-              ? "text-purple-300"
+              ? "border-purple-300"
               : type === "school"
-              ? "text-green-300"
+              ? "border-green-300"
               : ""
           }`}
-        />
-        <p className="first-letter:uppercase w-fit text-sm">{type}</p>
-      </section>
-      <p className="font-light line-clamp-4 mt-6 text-sm">{description}</p>
-      <div className="w-full flex flex-col absolute bottom-2">
-        <section className="flex">
-          <p
-            className={`text-sm ${dueDateFormat < today ? "text-red-500" : ""}`}
-          >
-            {`Due on ${due} `}
-          </p>
-          <section className="absolute flex right-4">
-            <Edit className="cursor-pointer" onClick={handleOpen} />
-            <DeleteForeverOutlined
-              onClick={() => handleDelete(id)}
-              className="cursor-pointer"
-            />
-          </section>
+        >
+          <Star
+            className={`w-4 h-4 rounded-full ${
+              type === "personal"
+                ? "text-yellow-300"
+                : type === "work"
+                ? "text-purple-300"
+                : type === "school"
+                ? "text-green-300"
+                : ""
+            }`}
+          />
+          <p className="first-letter:uppercase w-fit text-sm">{type}</p>
         </section>
+        <p className="font-light line-clamp-4 mt-6 text-sm">{description}</p>
+        <div className="w-full flex flex-col absolute bottom-2">
+          <section className="flex">
+            <p
+              className={`text-sm ${
+                dueDateFormat < today ? "text-red-500" : ""
+              }`}
+            >
+              {`${dueDateFormat < today ? "Was due" : "Due"} ${due}`}
+            </p>
+            <section className="absolute flex right-4">
+              <DeleteForeverOutlined
+                onClick={() => handleDelete(id)}
+                className="cursor-pointer"
+              />
+            </section>
+          </section>
+        </div>
+        <EditTaskModal id={id} />
       </div>
-      <EditTaskModal open={isOpen} handleClose={handleClose} id={id} />
-    </div>
   );
 }

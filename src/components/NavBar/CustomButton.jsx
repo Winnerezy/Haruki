@@ -1,13 +1,12 @@
-import { styled } from '@mui/material'
-import Button from "@mui/material/Button";
+export default function CustomButton({ children, route, pathname }) {
 
-export default function CustomButton({ children }) {
-   const StyledButton = styled(Button)({
-     border: "1px solid",
-     boxShadow: "black 4px",
-     borderColor: "black"
-   });
   return (
-    <StyledButton className="w-60 h-8" disableRipple={true}>{ children }</StyledButton>
-  )
+    <button
+      className={`${
+        route === pathname ? "bg-[var(--global-tertiary-bg)]" : ""
+      } w-60 h-12 rounded-md border-2 border-[var(--global-border)] text-[var(--global-text)] p-2`}
+    >
+      {children}
+    </button>
+  );
 }

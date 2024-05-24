@@ -8,6 +8,7 @@ import { TaskContext } from "../TaskContext";
 export default function useFetchData(){
   const { setTasks } = useContext(TaskContext)
   const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
   const fetchTasks = useCallback(async() => {
       try {
         const options = {
@@ -22,7 +23,7 @@ export default function useFetchData(){
         }
         setTasks(res.data);
       } catch (error) {
-        console.error(error);
+        setError(error)
       } finally {
         setIsLoading(false)
       }
@@ -32,10 +33,9 @@ export default function useFetchData(){
     fetchTasks()
   }, [fetchTasks])
   
-
   const refetch = async() => {
     await fetchTasks();
   } 
   
-  return { isLoading, refetch }
+  return { isLoading, refetch, error }
 }
