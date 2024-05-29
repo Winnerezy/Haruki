@@ -6,10 +6,11 @@ import { Delete } from "@mui/icons-material";
 import dayjs from "dayjs";
 import { CheckBox } from "@mui/icons-material";
 import { Check } from "@mui/icons-material";
+import { Edit } from "@mui/icons-material";
 
 export default function TaskCard({ id, title, description, dueDate, type, status }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { refetch } = useFetchData();
+  const { isLoading, refetch } = useFetchData();
 
   const handleClose = () => setIsOpen(false);
   const handleOpen = () => setIsOpen(true);
@@ -43,10 +44,10 @@ export default function TaskCard({ id, title, description, dueDate, type, status
   }
   
   // the date and time of the task in a standard format 
-const dueFormatted = dayjs(dueDate).format("LLLL");
+const dueFormatted = dayjs(dueDate);
 
 // the current date and time in a standard format
-const today = dayjs(new Date()).format("LLLL"); 
+const today = dayjs(new Date()); 
 
 
   return (
@@ -91,14 +92,18 @@ const today = dayjs(new Date()).format("LLLL");
         <div className="flex items-center justify-between">
           <span
             className={`font-semibold text-sm ${
-              dueFormatted < today
+              dueFormatted.isBefore(today) || dueFormatted.isSame(today)
                 ? "text-[var(--overdue-indicator-color)]"
                 : ""
             }`}
-          >{`Due ${dueFormatted}`}</span>
-          <Delete onClick={() => handleDelete(id)} />
+          >{`Due ${dueFormatted.format('LLLL')}`}</span>
+          <div className="flex items-center justify-center gap-x-2">
+            <Edit onClick={handleOpen} />
+            <Delete onClick={() => handleDelete(id)} />
+          </div>
         </div>
       </section>
+      <EditTaskModal isOpen={isOpen} handleClose={handleClose} id={id} isLoading={isLoading}/>
     </section>
   );
 }

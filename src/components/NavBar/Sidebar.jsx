@@ -11,6 +11,8 @@ import { CalendarIcon } from '@mui/x-date-pickers'
 import { ClockIcon } from '@mui/x-date-pickers'
 import { Event } from '@mui/icons-material'
 import { EventAvailable } from '@mui/icons-material'
+import { Notes } from '@mui/icons-material'
+import { Book } from '@mui/icons-material'
 
 export default function Sidebar() {
   const { pathname } = useLocation() //getting the path name of the current page
@@ -39,10 +41,10 @@ export default function Sidebar() {
               <p className="hidden lg:flex">Pomodoro</p>
             </button>
           </Link>
-          <Link to={"/my-events"} className="">
+          <Link to={"/notes"} className="">
             <button className="relative w-12 lg:w-60 h-12 rounded-md lg:border-2 border-[var(--global-border)] text-[var(--global-text)] p-2 flex items-center justify-center">
-              <EventAvailable className="lg:absolute left-2" />
-              <p className="hidden lg:flex">My Events</p>
+              <Book className="lg:absolute left-2" />
+              <p className="hidden lg:flex">Notes</p>
             </button>
           </Link>
         </section>

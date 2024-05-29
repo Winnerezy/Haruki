@@ -44,7 +44,8 @@ app.get('/get-tasks', verifyToken, getTasks)
 app.get("/get-task/:id", verifyToken, getTask);
 app.put("/edit-task/:id", verifyToken, editTask);
 app.put("/edit-status/:id", verifyToken, editStatus);
-app.delete('/delete-task/:id', verifyToken, deleteTask)
+app.delete('/delete-task/:id', verifyToken, deleteTask);
+
 app.listen(PORT, ()=> {
     console.log(`Server running on port ${PORT}`)
 })

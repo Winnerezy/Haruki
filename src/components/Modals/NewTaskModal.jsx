@@ -17,6 +17,7 @@ export default function NewTaskModal({ open, handleClose }) {
   const [date, setDate] = useState(dayjs(new Date())); // date picker for the modal
   const [type, setType] = useState("");
   const { refetch } = useFetchData();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = () => {
     setTitle(titleRef.current.value);
@@ -31,6 +32,7 @@ export default function NewTaskModal({ open, handleClose }) {
 
   const handleAdd = async () => {
     try {
+      setIsLoading(true)
       const options = {
         headers: {
           accept: "application/json",
@@ -53,9 +55,12 @@ export default function NewTaskModal({ open, handleClose }) {
       }
       handleClose();
       setTitle("");
+      setDescription("")
       refetch();
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false)
     }
   };
 
@@ -76,10 +81,10 @@ export default function NewTaskModal({ open, handleClose }) {
             onChange={handleChange}
             required={true}
           />
-          <input
+          <textarea
             type="text"
             placeholder="Enter description"
-            className="w-full h-48 flex-grow outline-none bg-transparent font-light text-wrap"
+            className="w-full min-h-12 max-h-48 flex-grow outline-none bg-transparent font-light break-words"
             value={description}
             ref={descriptionRef}
             onChange={handleChange}
@@ -112,7 +117,7 @@ export default function NewTaskModal({ open, handleClose }) {
             />
           </LocalizationProvider>
 
-          <Button title={"Add Task"} onClick={handleAdd} />
+          <Button title={"Add Task"} onClick={handleAdd} isLoading={isLoading}/>
         </section>
       </Box>
     </Modal>
