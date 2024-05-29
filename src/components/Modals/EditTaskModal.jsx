@@ -57,7 +57,7 @@ export default function EditTaskModal({ id, isOpen, handleClose }) {
   }
   fetchTask()
 }, [id]);
-console.log(type)
+
 const handleEdit = async() => {
     try {
       const options = {

@@ -3,7 +3,7 @@ import Button from "../Shared/Button";
 import { useState } from "react";
 import { useRef } from "react";
 import axios from "axios";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import useFetchData from "../../hooks/useFetchData";
@@ -14,7 +14,7 @@ export default function NewTaskModal({ open, handleClose }) {
   const [description, setDescription] = useState("");
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
-  const [date, setDate] = useState(dayjs(new Date())); //date picker for the modal
+  const [date, setDate] = useState(dayjs(new Date())); // date picker for the modal
   const [type, setType] = useState("");
   const { refetch } = useFetchData();
 
@@ -23,7 +23,6 @@ export default function NewTaskModal({ open, handleClose }) {
     setDescription(descriptionRef.current.value);
   };
 
-  console.log(open)
   const taskTypes = [
     { value: "personal", label: "Personal" },
     { value: "school", label: "School" },
@@ -41,7 +40,7 @@ export default function NewTaskModal({ open, handleClose }) {
       const body = {
         title: title,
         description: description,
-        dueDate: date.toISOString().slice(0, 10),
+        dueDate: date,
         type: type,
       };
       const res = await axios.post(
@@ -66,21 +65,21 @@ export default function NewTaskModal({ open, handleClose }) {
       onClose={handleClose}
       className="flex w-full items-center justify-center"
     >
-      <Box className="max-w-[1000px] h-[600px] task flex-grow mx-4 rounded-md w-full p-4 flex md:flex-row flex-col items-center justify-center">
+      <Box className="max-w-[1000px] h-[600px] task flex-grow mx-4 rounded-lg w-full p-4 flex md:flex-row flex-col items-center justify-center">
         <section className="w-full flex flex-col gap-8">
           <input
             type="text"
             placeholder="Enter task title"
-            className="w-full max-h-14 flex-grow outline-none border-b-2 bg-transparent font-bold text-center"
+            className="w-full max-h-14 flex-grow outline-none bg-transparent font-bold text-3xl placeholder:text-3xl"
             value={title}
             ref={titleRef}
             onChange={handleChange}
             required={true}
           />
-          <textarea
+          <input
             type="text"
             placeholder="Enter description"
-            className="w-full max-h-48 flex-grow outline-none bg-transparent font-light"
+            className="w-full h-48 flex-grow outline-none bg-transparent font-light text-wrap"
             value={description}
             ref={descriptionRef}
             onChange={handleChange}
@@ -89,26 +88,25 @@ export default function NewTaskModal({ open, handleClose }) {
             options={taskTypes}
             className="max-w-60 font-light text-sm tracking-wide"
             styles={{
-              control: (baseStyles, state) => ({
-                ...baseStyles,
-                backgroundColor: "var(--global-card-bg)",
-                color: "black",
-              }),
+              control: (baseStyles, state) => (
+                state.children,
+                {
+                  backgroundColor: "var(--global-card-bg)",
+                  borderColor: "var(--global-border)",
+                  display: "flex",
+                  borderWidth: "2px",
+                  borderRadius: "50px",
+                }
+              ),
             }}
             placeholder="Select task type"
             value={taskTypes.value}
             onChange={(e) => setType(e.value)}
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
-              className="w-full flex-grow outline-none"
-              sx={{ color: "white" }}
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-                  backgroundColor: "red",
-                }),
-              }}
+            <DateTimePicker
+              className="w-full max-w-60 flex-grow"
+              style={{ color: "red" }}
               value={date}
               onChange={(newDate) => setDate(newDate)}
             />

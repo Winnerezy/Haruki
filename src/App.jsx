@@ -8,7 +8,7 @@ function App() {
   return (
     <main className="w-full min-h-screen flex">
       <Sidebar/>
-      <section className="size-full flex flex-col">
+      <section className="w-full min-h-screen flex flex-col">
         <Topbar/>
         <Outlet />
       </section>

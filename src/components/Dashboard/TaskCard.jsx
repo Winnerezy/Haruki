@@ -1,99 +1,104 @@
-import { DeleteForeverOutlined } from '@mui/icons-material'
-import { Edit } from '@mui/icons-material'
-import axios from 'axios'
-import useFetchData from '../../hooks/useFetchData'
-import dayjs from 'dayjs'
-import { Star } from '@mui/icons-material'
-import EditTaskModal from '../Modals/EditTaskModal'
-import { useState } from 'react'
-import { EditSharp } from '@mui/icons-material'
+import axios from "axios";
+import { useState } from "react";
+import EditTaskModal from "../Modals/EditTaskModal";
+import useFetchData from "../../hooks/useFetchData.js";
+import { Delete } from "@mui/icons-material";
+import dayjs from "dayjs";
+import { CheckBox } from "@mui/icons-material";
+import { Check } from "@mui/icons-material";
 
-export default function TaskCard({ id, title, description, dueDate, type, onClick }) {
-  
+export default function TaskCard({ id, title, description, dueDate, type, status }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const { refetch } = useFetchData();
 
-  const [isOpen, setIsOpen] = useState(false)
+  const handleClose = () => setIsOpen(false);
+  const handleOpen = () => setIsOpen(true);
 
-    const handleClose = () => {
-      setIsOpen(false);
-    };
-
-
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-
-  const { refetch } = useFetchData()
-  const handleDelete = async(id) => {
+  const handleDelete = async (id) => {
     try {
-      const options = {
+      await axios.delete(`http://localhost:3000/delete-task/${id}`, {
         headers: {
           accept: "application/json",
-          authorization: `Bearer ${localStorage.getItem("authToken")}`
-        }
-      }
-      await axios.delete(`http://localhost:3000/delete-task/${id}`, options)
-      refetch()
+          authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      });
+      refetch();
     } catch (error) {
-      console.log(error)
+      console.log(error);
+    }
+  };
+
+  const handleStatus = async(id) => {
+    try {
+      await axios.put(`http://localhost:3000/edit-status/${id}`, null, {
+        headers: {
+          accept: "application/json",
+          authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      });
+      refetch();
+    } catch (error) {
+      console.log(error);
     }
   }
+  
+  // the date and time of the task in a standard format 
+const dueFormatted = dayjs(dueDate).format("LLLL");
 
-  const today = dayjs(new Date).format("l")
-  const dueDateFormat = dayjs(dueDate).format("l")
-  const due = dayjs(dueDate).format("dddd, DD, MMMM, YYYY")
+// the current date and time in a standard format
+const today = dayjs(new Date()).format("LLLL"); 
+
 
   return (
-    <div
-      className="mt-8 relative flex flex-col w-full max-w-[400px] p-2 h-[200px] rounded-md shadow-md task hover:bg-[var(--global-card-accent-bg)] hover:-translate-y-1 transition duration-300 ease-in-out cursor-pointer"
-    >
-      <article className="text-md font-semibold text-start max-w-36 sm:max-w-80 line-clamp-1">
+    <section className="relative flex flex-col justify-between gap-y-4 w-full sm:max-w-[350px] h-[300px] rounded-3xl shadow-lg bg-[var(--global-card-bg)] p-4 hover:bg-[var(--global-card-hover-bg)] hover:-translate-y-1 transition duration-300 ease-in-out cursor-pointer">
+      <p className="text-2xl font-bold tracking-wide max-w-full line-clamp-2">
         {title}
-      </article>
-      <section
-        className={`flex items-center justify-center gap-x-1 absolute top-2 right-2 border rounded-md p-1 ${
-          type === "personal"
-            ? "border-yellow-300"
-            : type === "work"
-            ? "border-purple-300"
-            : type === "school"
-            ? "border-green-300"
-            : ""
-        }`}
-      >
-        <Star
-          className={`w-4 h-4 rounded-full ${
-            type === "personal"
-              ? "text-yellow-300"
-              : type === "work"
-              ? "text-purple-300"
-              : type === "school"
-              ? "text-green-300"
-              : ""
-          }`}
-        />
-        <p className="first-letter:uppercase w-fit text-sm">{type}</p>
-      </section>
-      <p className="font-light line-clamp-4 mt-6 text-sm">{description}</p>
-      <div className="w-full flex flex-col absolute bottom-2">
-        <section className="flex">
-          <p
-            className={`text-sm ${dueDateFormat < today ? "text-red-500" : ""}`}
+      </p>
+      <p className="line-clamp-4">{description}</p>
+      <section className="w-full flex flex-col gap-y-2">
+        <div className="flex justify-between">
+          <div
+            className={`w-[100px] h-[30px] border-2 rounded-full flex items-center justify-center ${
+              type === "personal"
+                ? "border-[var(--personal-indicator)]"
+                : type === "school"
+                ? "border-[var(--school-indicator)]"
+                : type === "work"
+                ? "border-[var(--work-indicator)]"
+                : ""
+            } `}
           >
-            {`${dueDateFormat < today ? "Was due" : "Due"} ${due}`}
-          </p>
-          <section className="absolute flex right-4 ">
-            <EditSharp
-              onClick={handleOpen}
-              className="cursor-pointer z-40"
-            />
-            <DeleteForeverOutlined
-              onClick={() => handleDelete(id)}
-              className="cursor-pointer z-40"
-            />
-          </section>
-        </section>
-      </div>
-      <EditTaskModal id={id} isOpen={isOpen} handleClose={handleClose} />
-    </div>
+            <span
+              className={`font-light text-sm first-letter:uppercase text-center ${
+                type === "personal"
+                  ? "text-[var(--personal-indicator)]"
+                  : type === "school"
+                  ? "text-[var(--school-indicator)]"
+                  : type === "work"
+                  ? "text-[var(--work-indicator)]"
+                  : ""
+              }
+           `}
+            >
+              {type}
+            </span>
+          </div>
+          <div className={`${status === "Completed" ? "hidden" : ""}`}>
+            <Check onClick={() => handleStatus(id)} />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <span
+            className={`font-semibold text-sm ${
+              dueFormatted < today
+                ? "text-[var(--overdue-indicator-color)]"
+                : ""
+            }`}
+          >{`Due ${dueFormatted}`}</span>
+          <Delete onClick={() => handleDelete(id)} />
+        </div>
+      </section>
+    </section>
   );
 }

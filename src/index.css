@@ -11,9 +11,9 @@
 }
 
 body{
-  background-color: var(--global-primary-bg);
+  background-color: var(--global-secondary-bg);
   color: var(--global-text);
-  transition: 0.3s ease-in-out
+  transition: 0.3s ease-in-out;
 }
 
 ::selection {
@@ -39,7 +39,6 @@ body{
 
 .skeleton {
   background-color: var(--global-secondary-skeleton);
-  border-radius: 4px;
   /* Add animation for pulsating effect (optional) */
   animation: pulse 2s ease-in-out infinite alternate;
 }

@@ -1,5 +1,6 @@
 {
-    "rewrites":[
-        {"source": "/dashboard", "destination": "./src/pages/Dashboard.jsx"}
-    ]
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }

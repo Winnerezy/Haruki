@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Router>
             <Routes>
               <Route path="/" element={<App />}>
-                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="tasks" element={<Dashboard />} />
                 <Route path="calendar" element={<Calendar />} />
               </Route>
               <Route path="/sign-up" element={<SignUp />} />
