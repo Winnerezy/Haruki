@@ -73,10 +73,11 @@ export const deleteTask = async(req, res) => {
   }
 }
 
-export const editStatus= async (req, res) => {
+export const editStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    const task = await Task.findByIdAndUpdate(id, { status: "Completed" });
+    const { status } = req.body
+    const task = await Task.findByIdAndUpdate(id, { status: status });
     if (!task) {
       return res.status(400).json({ message: "No task found" });
     }

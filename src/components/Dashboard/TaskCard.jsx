@@ -4,8 +4,7 @@ import EditTaskModal from "../Modals/EditTaskModal";
 import useFetchData from "../../hooks/useFetchData.js";
 import { Delete } from "@mui/icons-material";
 import dayjs from "dayjs";
-import { CheckBox } from "@mui/icons-material";
-import { Check } from "@mui/icons-material";
+import { Check, Pending } from "@mui/icons-material";
 import { Edit } from "@mui/icons-material";
 
 export default function TaskCard({ id, title, description, dueDate, type, status }) {
@@ -29,9 +28,9 @@ export default function TaskCard({ id, title, description, dueDate, type, status
     }
   };
 
-  const handleStatus = async(id) => {
+  const handleStatus = async(id, status) => {
     try {
-      await axios.put(`http://localhost:3000/edit-status/${id}`, null, {
+      await axios.put(`http://localhost:3000/edit-status/${id}`, { status: status }, {
         headers: {
           accept: "application/json",
           authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -84,8 +83,13 @@ const today = dayjs(new Date());
               {type}
             </span>
           </div>
-          <div className={`${status === "Completed" ? "hidden" : ""}`}>
-            <Check onClick={() => handleStatus(id)} />
+          <div
+            className={`${
+              status === "Completed" ? "hidden" : ""
+            } flex items-center justify-center gap-x-2`}
+          >
+            <Pending onClick={() => handleStatus(id, "In Progress")} />
+            <Check onClick={() => handleStatus(id, "Completed")} />
           </div>
         </div>
 
@@ -96,14 +100,19 @@ const today = dayjs(new Date());
                 ? "text-[var(--overdue-indicator-color)]"
                 : ""
             }`}
-          >{`Due ${dueFormatted.format('LLLL')}`}</span>
+          >{`Due ${dueFormatted.format("LLLL")}`}</span>
           <div className="flex items-center justify-center gap-x-2">
             <Edit onClick={handleOpen} />
             <Delete onClick={() => handleDelete(id)} />
           </div>
         </div>
       </section>
-      <EditTaskModal isOpen={isOpen} handleClose={handleClose} id={id} isLoading={isLoading}/>
+      <EditTaskModal
+        isOpen={isOpen}
+        handleClose={handleClose}
+        id={id}
+        isLoading={isLoading}
+      />
     </section>
   );
 }

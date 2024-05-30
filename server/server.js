@@ -8,7 +8,7 @@ import {  getProfile } from "./controllers/ProfileController.js"
 import { verifyToken } from "./middleware/VerifyToken.js"
 import { addTasks, deleteTask, editStatus, editTask, getTask, getTasks } from "./controllers/TasksController.js"
 
-const app = express()
+export const app = express()
 app.use(express.json());
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))

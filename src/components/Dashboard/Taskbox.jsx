@@ -12,14 +12,14 @@ export default function Taskbox() {
   const { isLoading, error } = useFetchData();
 
   return (
-    <div className="size-full shadow-sm overflow-y-auto ">
-      <section className="size-full flex sm:flex-row flex-col gap-5 justify-center min:items-center">
+    <div className="size-full shadow-sm overflow-y-auto">
+      <section className="w-full sm:h-[calc(100vh-300px)] flex sm:flex-row flex-col gap-5 justify-center min:items-center">
         <div className="space-y-4 flex-grow w-full">
           <div className="flex gap-x-4 bg-[var(--global-card-bg)] w-full sm:max-w-[350px] h-10 rounded-2xl shadow-md p-2">
             <Circle className="text-[var(--not-started-indicator-color)] ml-4" />
             <p className="font-extrabold">TO-DO</p>
           </div>
-          <section className="flex flex-col gap-y-4">
+          <section className="flex flex-col gap-y-4 last:mb-4">
             {isLoading
               ? Array(2)
                   .fill(null)
