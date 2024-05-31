@@ -19,9 +19,9 @@ export default function BottomBar() {
 
   return (
     <main
-      className={`absolute bottom-0 md:hidden w-full flex gap-5 transition duration-300 ease-in-out bg-[var(--global-card-bg)] border-r-[var(--global-primary-skeleton)]`}
+      className={`fixed z-50 bottom-0 md:hidden w-full flex gap-5 transition duration-300 ease-in-out bg-[var(--global-card-bg)] border-r-[var(--global-primary-skeleton)]`}
     >
-      <section className="h-20 w-full flex items-center justify-between px-6 sm:px-8 md:px-12">
+      <section className="h-20 w-full flex items-center justify-between px-2 sm:px-8 md:px-12">
         <Link to={"/tasks"}>
           <button className="relative w-12 h-12 rounded-md lg:border-2 border-[var(--global-border)] text-[var(--global-text)] p-2 flex flex-col items-center justify-center">
             <Task />
