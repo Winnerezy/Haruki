@@ -10,6 +10,7 @@ import ThemeProvider from "./ThemeContext.jsx";
 import SidebarProvider from "./utils/SidebarContext.jsx";
 import TaskProvider from "./TaskContext.jsx";
 import Calendar from "./pages/Calendar.jsx";
+import Pomodoro from "./pages/Pomodoro.jsx";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/" element={<App />}>
                 <Route path="tasks" element={<Dashboard />} />
                 <Route path="calendar" element={<Calendar />} />
+                 <Route path="pomodoro" element={<Pomodoro />} />
               </Route>
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/sign-in" element={<SignIn />} />

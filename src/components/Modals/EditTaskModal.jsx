@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import useFetchData from "../../hooks/useFetchData";
 import ReactSelect from "react-select";
 import { useEffect } from "react";
+import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 
 export default function EditTaskModal({ id, isOpen, handleClose }) {
   const [title, setTitle] = useState("");
@@ -108,33 +109,44 @@ const handleEdit = async() => {
             onChange={handleChange}
             required={true}
           />
-          <textarea
-            type="text"
+          <TextareaAutosize
             placeholder="Enter description"
-            className="w-full min-h-12 max-h-48 flex-grow outline-none bg-transparent font-light break-words"
+            className="w-full max-h-48 flex-grow outline-none bg-transparent font-light overflow-auto"
             value={description}
             ref={descriptionRef}
             onChange={handleChange}
           />
-          <ReactSelect
+          {/* <ReactSelect
             options={taskTypes}
             className="max-w-60 font-light text-sm tracking-wide"
             styles={{
-              control: (baseStyles, state) => (
-                state.children,
-                {
-                  backgroundColor: "var(--global-card-bg)",
-                  borderColor: "var(--global-border)",
-                  display: "flex",
-                  borderWidth: "2px",
-                  borderRadius: "50px",
-                }
-              ),
+              menu: (baseStyles) => ({
+                ...baseStyles,
+                option: (provided, state) => ({
+                  ...provided,
+                  ":hover": {
+                    backgroundColor: "red", // Set hover background for options
+                  },
+                }),
+              }),
             }}
             placeholder="Select task type"
             value={taskTypes.value}
             onChange={(e) => setType(e.value)}
-          />
+          /> */}
+
+          <select
+            className="w-full max-w-48 h-8 flex-grow rounded-lg p- bg-[var(--global-secondary)] border-[var(--global-border-bg)]"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+          >
+            <option value="personal">
+              Personal
+            </option>
+            <option value="school">School</option>
+            <option value="work">Work</option>
+          </select>
+
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateTimePicker
               className="w-full max-w-60 flex-grow"
@@ -144,7 +156,11 @@ const handleEdit = async() => {
             />
           </LocalizationProvider>
 
-          <Button title={"Edit Task"} onClick={handleEdit} isLoading={isLoading} />
+          <Button
+            title={"Edit Task"}
+            onClick={handleEdit}
+            isLoading={isLoading}
+          />
         </section>
       </Box>
     </Modal>

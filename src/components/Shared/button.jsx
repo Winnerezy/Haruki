@@ -1,8 +1,7 @@
 export default function Button({ title, onClick, isLoading }) {
-  console.log(isLoading)
   return (
     <button
-      className="border border-[var(--global-border-bg)] rounded-md hover:bg-[var(--global-button-hover-bg)] hover:text-white w-36 min-h-10 self-center font-bold"
+      className="border border-[var(--global-border-bg)] rounded-md hover:opacity-60 w-36 min-h-10 self-center font-bold"
       onClick={onClick}
     >
       {isLoading ? (

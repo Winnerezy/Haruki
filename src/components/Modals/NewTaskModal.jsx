@@ -8,6 +8,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import useFetchData from "../../hooks/useFetchData";
 import ReactSelect from "react-select";
+import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 
 export default function NewTaskModal({ open, handleClose }) {
   const [title, setTitle] = useState("");
@@ -81,15 +82,14 @@ export default function NewTaskModal({ open, handleClose }) {
             onChange={handleChange}
             required={true}
           />
-          <textarea
-            type="text"
+          <TextareaAutosize
             placeholder="Enter description"
-            className="w-full min-h-12 max-h-48 flex-grow outline-none bg-transparent font-light break-words"
+            className="w-full max-h-48 flex-grow outline-none bg-transparent font-light overflow-auto"
             value={description}
             ref={descriptionRef}
             onChange={handleChange}
           />
-          <ReactSelect
+          {/* <ReactSelect
             options={taskTypes}
             className="max-w-60 font-light text-sm tracking-wide"
             styles={{
@@ -107,7 +107,13 @@ export default function NewTaskModal({ open, handleClose }) {
             placeholder="Select task type"
             value={taskTypes.value}
             onChange={(e) => setType(e.value)}
-          />
+          /> */}
+
+          <select className="w-full max-w-48 h-8 flex-grow rounded-lg p- bg-[var(--global-secondary)] border-[var(--global-border-bg)]" value={type} onChange={(e)=> setType(e.target.value)}>
+            <option value="personal" className="bg-[var(--global-primary)]">Personal</option>
+            <option value="school">School</option>
+            <option value="work">Work</option>
+          </select>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateTimePicker
               className="w-full max-w-60 flex-grow"
@@ -117,7 +123,11 @@ export default function NewTaskModal({ open, handleClose }) {
             />
           </LocalizationProvider>
 
-          <Button title={"Add Task"} onClick={handleAdd} isLoading={isLoading}/>
+          <Button
+            title={"Add Task"}
+            onClick={handleAdd}
+            isLoading={isLoading}
+          />
         </section>
       </Box>
     </Modal>
